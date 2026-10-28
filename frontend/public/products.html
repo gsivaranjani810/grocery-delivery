@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="FreshCart - Fresh groceries delivered in 15-30 minutes."/>
+  <title>Products Catalog | FreshCart – Instant Grocery Delivery</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body data-page="products">
+
+<div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+<!-- ===== TOP UTILITY / ANNOUNCEMENT BAR ===== -->
+<div class="top-bar">
+  <div class="container top-bar-inner">
+    <div class="top-bar-left">
+      <span class="delivery-pill-flash"><i class="fa fa-bolt"></i> 15-Min Delivery</span>
+      <span class="top-bar-text"><i class="fa fa-leaf"></i> 100% Farm Fresh &amp; Hygienically Packed</span>
+    </div>
+    <div class="top-bar-right">
+      <button class="top-link" id="topLocationBtn" aria-label="Select location">
+        <i class="fa fa-map-marker-alt"></i> <span id="topLocationText">Deliver to: <strong>Chennai 600001</strong></span> <i class="fa fa-chevron-down"></i>
+      </button>
+      <a href="orders.html" class="top-link"><i class="fa fa-truck"></i> Track Order</a>
+      <a href="tel:18002003737" class="top-link"><i class="fa fa-phone-alt"></i> 1800-200-FRESH</a>
+    </div>
+  </div>
+</div>
+
+<header class="header" id="header">
+  <div class="container header-inner">
+    <!-- Brand Logo -->
+    <a href="index.html" class="logo" aria-label="FreshCart Home">
+      <span class="logo-icon">🛒</span>
+      <div class="logo-group">
+        <span class="logo-text">Fresh<span class="logo-accent">Cart</span></span>
+        <span class="logo-subtext">15 MINS GROCERY</span>
+      </div>
+    </a>
+
+
+
+    <!-- Desktop Navigation -->
+    <nav class="nav-desktop" aria-label="Main navigation">
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item-dropdown" id="categoriesDropdownItem">
+          <a href="categories.html" class="nav-link dropdown-toggle" id="categoriesToggle">
+            Categories <i class="fa fa-chevron-down nav-arrow"></i>
+          </a>
+          <div class="categories-mega-menu" id="categoriesMegaMenu">
+            <div class="mega-menu-header">
+              <span>Shop by Category</span>
+              <a href="categories.html" class="mega-view-all">View All (8) <i class="fa fa-arrow-right"></i></a>
+            </div>
+            <div class="mega-menu-grid">
+              <a href="products.html?cat=fruits" class="mega-item">
+                <span class="mega-emoji">🍎</span>
+                <div><strong>Fruits</strong><small>6 items</small></div>
+              </a>
+              <a href="products.html?cat=vegetables" class="mega-item">
+                <span class="mega-emoji">🥦</span>
+                <div><strong>Vegetables</strong><small>5 items</small></div>
+              </a>
+              <a href="products.html?cat=dairy" class="mega-item">
+                <span class="mega-emoji">🥛</span>
+                <div><strong>Dairy &amp; Eggs</strong><small>3 items</small></div>
+              </a>
+              <a href="products.html?cat=bakery" class="mega-item">
+                <span class="mega-emoji">🍞</span>
+                <div><strong>Bakery</strong><small>3 items</small></div>
+              </a>
+              <a href="products.html?cat=beverages" class="mega-item">
+                <span class="mega-emoji">🧃</span>
+                <div><strong>Beverages</strong><small>4 items</small></div>
+              </a>
+              <a href="products.html?cat=snacks" class="mega-item">
+                <span class="mega-emoji">🍪</span>
+                <div><strong>Snacks</strong><small>3 items</small></div>
+              </a>
+              <a href="products.html?cat=grains" class="mega-item">
+                <span class="mega-emoji">🌾</span>
+                <div><strong>Rice &amp; Grains</strong><small>3 items</small></div>
+              </a>
+              <a href="products.html?cat=care" class="mega-item">
+                <span class="mega-emoji">🧴</span>
+                <div><strong>Personal Care</strong><small>2 items</small></div>
+              </a>
+            </div>
+          </div>
+        </li>
+        <li><a href="products.html" class="nav-link active" aria-current="page">Products</a></li>
+        <li><a href="offers.html" class="nav-link">Offers <span class="nav-badge-hot">HOT 🔥</span></a></li>
+        <li><a href="orders.html" class="nav-link">Orders</a></li>
+      </ul>
+    </nav>
+
+    <!-- Smart Search Bar with Live Suggestions Dropdown -->
+    <div class="search-wrapper">
+      <i class="fa fa-search search-icon-left"></i>
+      <input type="text" id="headerSearch" class="search-input" placeholder="Search groceries..." autocomplete="off" aria-label="Search groceries"/>
+      <button class="search-clear-btn" id="searchClearBtn" aria-label="Clear search" hidden><i class="fa fa-times"></i></button>
+      <button class="search-btn" id="searchBtn" aria-label="Search"><i class="fa fa-arrow-right"></i></button>
+      <div class="search-suggestions-dropdown" id="searchSuggestionsDropdown" hidden>
+        <div class="suggestions-header">Matching Products</div>
+        <div class="suggestions-list" id="suggestionsList"></div>
+        <div class="suggestions-footer" id="suggestionsFooter">
+          <a href="products.html" id="viewAllResultsLink">Press Enter to view all results &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header Actions: Wishlist, Profile, Cart -->
+    <div class="header-actions">
+      <!-- Wishlist Button -->
+      <a href="products.html?filter=wishlist" class="btn-icon" id="wishlistNavBtn" title="Wishlist" aria-label="Wishlist">
+        <i class="fa fa-heart"></i>
+        <span class="wishlist-badge" id="wishlistBadge">0</span>
+      </a>
+
+      <!-- Profile Button & Dropdown -->
+      <div class="profile-dropdown-wrapper">
+        <button class="btn-profile" id="profileBtn" aria-label="Account">
+          <i class="fa fa-user"></i>
+          <span id="profileLabel">Login</span>
+          <i class="fa fa-chevron-down profile-arrow"></i>
+        </button>
+        <div class="profile-menu" id="profileMenu" hidden>
+          <div class="profile-menu-header" id="profileMenuHeader">
+            <strong>Welcome to FreshCart!</strong>
+            <small>Login to access your orders</small>
+          </div>
+          <div class="profile-menu-items">
+            <a href="orders.html" class="profile-menu-item"><i class="fa fa-box"></i> My Orders</a>
+            <button class="profile-menu-item" id="menuLocationBtn"><i class="fa fa-map-marker-alt"></i> Change Location</button>
+            <button class="profile-menu-item" id="menuAuthBtn"><i class="fa fa-sign-in-alt"></i> Login / Register</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real E-Commerce Cart Pill Button -->
+      <button class="cart-pill-btn" id="cartBtn" aria-label="View Cart">
+        <div class="cart-pill-icon">
+          <i class="fa fa-shopping-cart"></i>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </div>
+        <div class="cart-pill-divider"></div>
+        <div class="cart-pill-info">
+          <span class="cart-pill-label">My Cart</span>
+          <span class="cart-pill-total" id="headerCartTotal">Rs.0</span>
+        </div>
+      </button>
+    </div>
+
+    <!-- Mobile Hamburger Toggle -->
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Mobile Top Dropdown Drawer -->
+  <nav class="nav-mobile" id="mobileNav" aria-label="Mobile navigation" hidden>
+    <div class="mobile-loc-row">
+      <i class="fa fa-map-marker-alt"></i>
+      <span id="mobileLocText">Chennai 600001 (15 Mins)</span>
+      <button class="btn-xs" id="mobileChangeLocBtn">Change</button>
+    </div>
+    <div class="mobile-search">
+      <input type="text" id="mobileSearch" class="search-input" placeholder="Search groceries..." autocomplete="off"/>
+      <button class="search-btn" id="mobileSearchBtn"><i class="fa fa-search"></i></button>
+    </div>
+    <ul class="mobile-links">
+      <li><a href="index.html" class="nav-link"><i class="fa fa-home"></i> Home</a></li>
+      <li><a href="categories.html" class="nav-link"><i class="fa fa-th-large"></i> Categories</a></li>
+      <li><a href="products.html" class="nav-link active"><i class="fa fa-store"></i> Products</a></li>
+      <li><a href="offers.html" class="nav-link"><i class="fa fa-tag"></i> Offers <span class="nav-badge-hot">HOT</span></a></li>
+      <li><a href="orders.html" class="nav-link"><i class="fa fa-box"></i> Orders</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <div class="page-hero" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);padding:36px 0 28px;border-bottom:1px solid #e2e8f0;">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">Home</a> <i class="fa fa-chevron-right"></i> Products</div>
+      <h1 class="page-hero-title">Fresh <span class="gradient-text">Products</span></h1>
+      <p class="page-hero-subtitle" id="productsSubtitle">Hand-picked quality groceries delivered fresh to your doorstep</p>
+    </div>
+  </div>
+  <section class="section products-section" id="products">
+    <div class="container">
+      <div class="filter-bar">
+        <div class="filter-tabs" id="filterTabs" role="tablist"></div>
+        <div class="filter-controls">
+          <select id="sortSelect" class="sort-select" aria-label="Sort">
+            <option value="default">Sort By: Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating-desc">Top Customer Rated</option>
+            <option value="discount-desc">Biggest Discounts</option>
+          </select>
+        </div>
+      </div>
+      <div class="products-grid" id="productsGrid"></div>
+      <div class="no-results" id="noResults" hidden>
+        <div class="no-results-emoji">🔍</div>
+        <h3>No products found</h3>
+        <p>Try searching with another keyword or pick a different category.</p>
+        <button class="btn-primary" id="clearSearchBtn">Clear Search &amp; Show All</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+<!-- ===== MOBILE BOTTOM APP BAR ===== -->
+<nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+  <a href="index.html" class="bottom-nav-item">
+    <i class="fa fa-home"></i>
+    <span>Home</span>
+  </a>
+  <a href="categories.html" class="bottom-nav-item">
+    <i class="fa fa-th-large"></i>
+    <span>Categories</span>
+  </a>
+  <a href="products.html" class="bottom-nav-item active">
+    <i class="fa fa-store"></i>
+    <span>Shop</span>
+  </a>
+  <a href="offers.html" class="bottom-nav-item">
+    <i class="fa fa-tag"></i>
+    <span>Offers</span>
+  </a>
+  <button class="bottom-nav-item" id="mobileBottomCartBtn" aria-label="Cart">
+    <div class="bottom-cart-wrap">
+      <i class="fa fa-shopping-cart"></i>
+      <span class="mobile-bottom-badge" id="mobileCartBadge">0</span>
+    </div>
+    <span>Cart</span>
+  </button>
+  <a href="orders.html" class="bottom-nav-item">
+    <i class="fa fa-box"></i>
+    <span>Orders</span>
+  </a>
+</nav>
+<!-- ===== CART SIDEBAR ===== -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-sidebar" id="cartSidebar" role="dialog" aria-modal="true" aria-label="Shopping cart" hidden>
+  <div class="cart-header">
+    <h2><i class="fa fa-shopping-cart"></i> My Cart <span id="cartCount" class="cart-count-badge">0</span></h2>
+    <button class="close-btn" id="closeCart" aria-label="Close cart"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-footer" id="cartFooter" hidden>
+    <div class="cart-summary">
+      <div class="summary-row"><span>Subtotal</span><span id="cartSubtotal">Rs.0</span></div>
+      <div class="summary-row"><span>Delivery Fee</span><span id="deliveryFee">Rs.40</span></div>
+      <div class="summary-row total-row"><span><strong>Total</strong></span><span id="cartTotal"><strong>Rs.0</strong></span></div>
+    </div>
+    <button class="btn-primary btn-full" id="checkoutBtn"><i class="fa fa-lock"></i> Proceed to Checkout</button>
+  </div>
+  <div class="cart-empty" id="cartEmpty">
+    <div class="empty-emoji">🛒</div>
+    <h3>Your cart is empty</h3>
+    <p>Add some fresh groceries to get started!</p>
+    <button class="btn-primary" id="startShoppingBtn">Browse Products</button>
+  </div>
+</aside>
+
+<!-- ===== LOGIN MODAL ===== -->
+<div class="modal-overlay" id="loginOverlay" hidden></div>
+<div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-label="Login" hidden>
+  <div class="modal-header">
+    <h2 id="authModalTitle"><i class="fa fa-user-circle"></i> Welcome Back</h2>
+    <button class="close-btn" id="closeLogin" aria-label="Close"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="modal-body">
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="loginTab">Login</button>
+      <button class="auth-tab" id="registerTab">Register</button>
+    </div>
+    <form id="loginForm" class="auth-form" novalidate>
+      <div class="form-group">
+        <label for="loginEmail">Email Address</label>
+        <div class="input-icon"><i class="fa fa-envelope"></i>
+          <input type="email" id="loginEmail" placeholder="you@example.com" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <div class="input-icon"><i class="fa fa-lock"></i>
+          <input type="password" id="loginPassword" placeholder="Your password" required/>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary btn-full"><i class="fa fa-sign-in-alt"></i> Login</button>
+    </form>
+    <form id="registerForm" class="auth-form" hidden novalidate>
+      <div class="form-group">
+        <label for="regName">Full Name</label>
+        <div class="input-icon"><i class="fa fa-user"></i>
+          <input type="text" id="regName" placeholder="Your full name" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="regEmail">Email Address</label>
+        <div class="input-icon"><i class="fa fa-envelope"></i>
+          <input type="email" id="regEmail" placeholder="you@example.com" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="regPassword">Password</label>
+        <div class="input-icon"><i class="fa fa-lock"></i>
+          <input type="password" id="regPassword" placeholder="Min 6 characters" required minlength="6"/>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary btn-full"><i class="fa fa-user-plus"></i> Create Account</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===== CHECKOUT MODAL ===== -->
+<div class="modal-overlay" id="checkoutOverlay" hidden></div>
+<div class="modal modal-large" id="checkoutModal" role="dialog" aria-modal="true" aria-label="Checkout" hidden>
+  <div class="modal-header">
+    <h2><i class="fa fa-shopping-bag"></i> Checkout</h2>
+    <button class="close-btn" id="closeCheckout" aria-label="Close"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="modal-body checkout-layout">
+    <div class="checkout-left">
+      <h3 class="checkout-section-title"><i class="fa fa-map-marker-alt"></i> Delivery Details</h3>
+      <form id="checkoutForm" novalidate>
+        <div class="form-row">
+          <div class="form-group"><label for="chkName">Full Name *</label>
+            <input type="text" id="chkName" placeholder="John Doe" required/>
+          </div>
+          <div class="form-group"><label for="chkPhone">Phone *</label>
+            <input type="tel" id="chkPhone" placeholder="9876543210" required pattern="[0-9]{10}"/>
+          </div>
+        </div>
+        <div class="form-group"><label for="chkAddress">Delivery Address *</label>
+          <input type="text" id="chkAddress" placeholder="Flat, building, street" required/>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="chkCity">City *</label>
+            <input type="text" id="chkCity" placeholder="City" value="Chennai" required/>
+          </div>
+          <div class="form-group"><label for="chkPincode">Pincode *</label>
+            <input type="text" id="chkPincode" placeholder="600001" value="600001" required maxlength="6"/>
+          </div>
+        </div>
+        <h3 class="checkout-section-title"><i class="fa fa-credit-card"></i> Payment Method</h3>
+        <div class="payment-options">
+          <label class="payment-option">
+            <input type="radio" name="payMethod" value="cod" checked/>
+            <span class="payment-icon">💵</span>
+            <div><strong>Cash on Delivery</strong><small>Pay when groceries arrive</small></div>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="payMethod" value="upi"/>
+            <span class="payment-icon">📱</span>
+            <div><strong>UPI / Google Pay</strong><small>Instant &amp; contact-free</small></div>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="payMethod" value="card"/>
+            <span class="payment-icon">💳</span>
+            <div><strong>Credit / Debit Card</strong><small>Visa, Mastercard, RuPay</small></div>
+          </label>
+        </div>
+        <button type="submit" class="btn-primary btn-full btn-place-order" id="placeOrderBtn">
+          <i class="fa fa-check-circle"></i> Place Order
+        </button>
+      </form>
+    </div>
+    <div class="checkout-right">
+      <h3 class="checkout-section-title"><i class="fa fa-receipt"></i> Order Summary</h3>
+      <div class="checkout-summary" id="checkoutItemsList"></div>
+      <div class="checkout-totals">
+        <div class="summary-row"><span>Items Subtotal</span><span id="chkSubtotal">Rs.0</span></div>
+        <div class="summary-row"><span>Delivery Fee</span><span id="chkDelivery">Rs.40</span></div>
+        <div class="summary-row total-row"><span><strong>Grand Total</strong></span><span id="chkTotal"><strong>Rs.0</strong></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ORDER CONFIRMATION MODAL ===== -->
+<div class="modal-overlay" id="confirmOverlay" hidden></div>
+<div class="modal modal-medium" id="confirmModal" role="dialog" aria-modal="true" hidden>
+  <div class="confirm-body">
+    <div class="confirm-animation"><div class="confirm-circle"><i class="fa fa-check"></i></div></div>
+    <h2 class="confirm-title">Order Placed Successfully! 🎉</h2>
+    <p class="confirm-subtitle">Your groceries will be delivered in <strong>15-30 minutes</strong>.</p>
+    <div class="confirm-details" id="confirmDetails"></div>
+    <div class="tracking-section">
+      <h3><i class="fa fa-truck"></i> Live Delivery Progress</h3>
+      <div class="tracking-steps">
+        <div class="track-step completed" id="step-confirmed">
+          <div class="track-icon"><i class="fa fa-check-circle"></i></div>
+          <div class="track-info"><strong>Order Confirmed</strong><span>Your order has been received</span></div>
+        </div>
+        <div class="track-connector" id="connector-1"></div>
+        <div class="track-step" id="step-packed">
+          <div class="track-icon"><i class="fa fa-box"></i></div>
+          <div class="track-info"><strong>Order Packed</strong><span>Items are being packed</span></div>
+        </div>
+        <div class="track-connector" id="connector-2"></div>
+        <div class="track-step" id="step-delivery">
+          <div class="track-icon"><i class="fa fa-motorcycle"></i></div>
+          <div class="track-info"><strong>Out for Delivery</strong><span>On the way to you</span></div>
+        </div>
+        <div class="track-connector" id="connector-3"></div>
+        <div class="track-step" id="step-delivered">
+          <div class="track-icon"><i class="fa fa-home"></i></div>
+          <div class="track-info"><strong>Delivered</strong><span>Enjoy your groceries!</span></div>
+        </div>
+      </div>
+    </div>
+    <button class="btn-primary btn-full" id="continueShoppingBtn">
+      <i class="fa fa-shopping-bag"></i> Continue Shopping
+    </button>
+  </div>
+</div>
+
+<!-- ===== TRACK ORDER MODAL ===== -->
+<div class="modal-overlay" id="trackOverlay" hidden></div>
+<div class="modal modal-medium" id="trackModal" role="dialog" aria-modal="true" hidden>
+  <div class="modal-header">
+    <h2><i class="fa fa-route"></i> Track Order</h2>
+    <button class="close-btn" id="closeTrack"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="modal-body" id="trackModalBody"></div>
+</div>
+
+<!-- ===== LOCATION SELECTOR MODAL ===== -->
+<div class="modal-overlay" id="locationOverlay" hidden></div>
+<div class="modal modal-medium" id="locationModal" role="dialog" aria-modal="true" aria-label="Select Delivery Location" hidden>
+  <div class="modal-header">
+    <h2><i class="fa fa-map-marker-alt"></i> Select Delivery Location</h2>
+    <button class="close-btn" id="closeLocationModal" aria-label="Close"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="location-modal-body">
+    <p class="loc-modal-desc">Select your city or enter a pincode to check instant 15-minute delivery availability.</p>
+    <div class="loc-search-box">
+      <i class="fa fa-search"></i>
+      <input type="text" id="locPincodeInput" placeholder="Enter Tamil Nadu City or 6-digit Pincode..." maxlength="30"/>
+      <button class="btn-primary" id="applyPincodeBtn" style="padding:8px 16px;">Set</button>
+    </div>
+    <button class="btn-gps" id="detectLocationBtn"><i class="fa fa-crosshairs"></i> Use Current Location (Auto-Detect)</button>
+    <div class="loc-popular-title">Popular Tamil Nadu Delivery Hubs</div>
+    <div class="loc-cities-grid">
+      <button class="city-chip active" data-city="Chennai" data-pin="600001">🏖️ Chennai 600001</button>
+      <button class="city-chip" data-city="Coimbatore" data-pin="641001">🏭 Coimbatore 641001</button>
+      <button class="city-chip" data-city="Madurai" data-pin="625001">🛕 Madurai 625001</button>
+      <button class="city-chip" data-city="Tiruchirappalli" data-pin="620001">🏰 Trichy 620001</button>
+      <button class="city-chip" data-city="Salem" data-pin="636001">🌾 Salem 636001</button>
+      <button class="city-chip" data-city="Tirunelveli" data-pin="627001">🌊 Tirunelveli 627001</button>
+      <button class="city-chip" data-city="Erode" data-pin="638001">🌸 Erode 638001</button>
+      <button class="city-chip" data-city="Vellore" data-pin="632001">🏛️ Vellore 632001</button>
+      <button class="city-chip" data-city="Thoothukudi" data-pin="628001">⛵ Thoothukudi 628001</button>
+      <button class="city-chip" data-city="Thanjavur" data-pin="613001">🌿 Thanjavur 613001</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

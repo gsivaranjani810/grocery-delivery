@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="FreshCart Customer Feedback - Rate your 15-minute grocery delivery experience and help us serve you better."/>
+  <title>Customer Feedback &amp; Reviews | FreshCart – Instant Grocery Delivery</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body data-page="feedback">
+
+<div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+<!-- ===== TOP UTILITY / ANNOUNCEMENT BAR ===== -->
+<div class="top-bar">
+  <div class="container top-bar-inner">
+    <div class="top-bar-left">
+      <span class="delivery-pill-flash"><i class="fa fa-bolt"></i> 15-Min Delivery</span>
+      <span class="top-bar-text"><i class="fa fa-leaf"></i> 100% Farm Fresh &amp; Hygienically Packed</span>
+    </div>
+    <div class="top-bar-right">
+      <button class="top-link" id="topLocationBtn" aria-label="Select location">
+        <i class="fa fa-map-marker-alt"></i> <span id="topLocationText">Deliver to: <strong>Chennai 600001</strong></span> <i class="fa fa-chevron-down"></i>
+      </button>
+      <a href="orders.html" class="top-link"><i class="fa fa-truck"></i> Track Order</a>
+      <a href="tel:18002003737" class="top-link"><i class="fa fa-phone-alt"></i> 1800-200-FRESH</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAIN HEADER ===== -->
+<header class="header" id="header">
+  <div class="container header-inner">
+    <!-- Brand Logo -->
+    <a href="index.html" class="logo" aria-label="FreshCart Home">
+      <span class="logo-icon">🛒</span>
+      <div class="logo-group">
+        <span class="logo-text">Fresh<span class="logo-accent">Cart</span></span>
+        <span class="logo-subtext">15 MINS GROCERY</span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="nav-desktop" aria-label="Main navigation">
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item-dropdown" id="categoriesDropdownItem">
+          <a href="categories.html" class="nav-link dropdown-toggle" id="categoriesToggle">
+            Categories <i class="fa fa-chevron-down nav-arrow"></i>
+          </a>
+          <div class="categories-mega-menu" id="categoriesMegaMenu">
+            <div class="mega-menu-header">
+              <span>Shop by Category</span>
+              <a href="categories.html" class="mega-view-all">View All (8) <i class="fa fa-arrow-right"></i></a>
+            </div>
+            <div class="mega-menu-grid">
+              <a href="products.html?cat=fruits" class="mega-item">
+                <span class="mega-emoji">🍎</span>
+                <div><strong>Fruits</strong><small>6 items</small></div>
+              </a>
+              <a href="products.html?cat=vegetables" class="mega-item">
+                <span class="mega-emoji">🥦</span>
+                <div><strong>Vegetables</strong><small>5 items</small></div>
+              </a>
+              <a href="products.html?cat=dairy" class="mega-item">
+                <span class="mega-emoji">🥛</span>
+                <div><strong>Dairy &amp; Eggs</strong><small>3 items</small></div>
+              </a>
+              <a href="products.html?cat=bakery" class="mega-item">
+                <span class="mega-emoji">🍞</span>
+                <div><strong>Bakery</strong><small>3 items</small></div>
+              </a>
+              <a href="products.html?cat=beverages" class="mega-item">
+                <span class="mega-emoji">🧃</span>
+                <div><strong>Beverages</strong><small>4 items</small></div>
+              </a>
+              <a href="products.html?cat=snacks" class="mega-item">
+                <span class="mega-emoji">🍪</span>
+                <div><strong>Snacks</strong><small>3 items</small></div>
+              </a>
+              <a href="products.html?cat=grains" class="mega-item">
+                <span class="mega-emoji">🌾</span>
+                <div><strong>Rice &amp; Grains</strong><small>3 items</small></div>
+              </a>
+              <a href="products.html?cat=care" class="mega-item">
+                <span class="mega-emoji">🧴</span>
+                <div><strong>Personal Care</strong><small>2 items</small></div>
+              </a>
+            </div>
+          </div>
+        </li>
+        <li><a href="products.html" class="nav-link">Products</a></li>
+        <li><a href="offers.html" class="nav-link">Offers <span class="nav-badge-hot">HOT 🔥</span></a></li>
+        <li><a href="orders.html" class="nav-link">Orders</a></li>
+        <li><a href="feedback.html" class="nav-link active" aria-current="page">Feedback ⭐</a></li>
+      </ul>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <!-- Search Input -->
+      <div class="search-wrapper">
+        <i class="fa fa-search search-icon"></i>
+        <input type="text" id="globalSearchInput" class="search-input" placeholder="Search fresh milk, fruits, veggies..." autocomplete="off"/>
+        <div class="search-autocomplete" id="searchAutocomplete"></div>
+      </div>
+
+      <!-- Auth Button / Profile -->
+      <div class="user-action-wrap" id="userActionWrap">
+        <button class="header-btn" id="loginBtn" aria-label="Sign in">
+          <i class="fa fa-user-circle"></i>
+          <span class="btn-label" id="userLabel">Sign In</span>
+        </button>
+        <div class="profile-dropdown" id="profileDropdown">
+          <div class="profile-dropdown-header">
+            <span class="user-avatar" id="dropdownAvatar">U</span>
+            <div class="user-info">
+              <strong id="dropdownName">User</strong>
+              <small id="dropdownEmail">user@example.com</small>
+            </div>
+          </div>
+          <div class="profile-dropdown-links">
+            <a href="orders.html"><i class="fa fa-box"></i> My Orders</a>
+            <a href="feedback.html"><i class="fa fa-star"></i> My Feedback</a>
+            <button id="logoutBtn" class="logout-btn"><i class="fa fa-sign-out-alt"></i> Logout</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cart Button -->
+      <button class="cart-pill-btn" id="openCartBtn" aria-label="Shopping Cart">
+        <span class="cart-pill-icon"><i class="fa fa-shopping-cart"></i></span>
+        <span class="cart-pill-count" id="headerCartCount">0</span>
+        <span class="cart-pill-divider"></span>
+        <div class="cart-pill-info">
+          <span class="cart-pill-label">My Cart</span>
+          <span class="cart-pill-total" id="headerCartTotal">Rs.0</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO HEADER ===== -->
+<section class="feedback-page-header">
+  <div class="container">
+    <div class="feedback-hero-badge">
+      <i class="fa fa-heart"></i> Customer Experience &amp; Ratings
+    </div>
+    <h1 class="feedback-hero-title">Your Feedback Makes Us Fresher &amp; Faster! 🛒</h1>
+    <p class="feedback-hero-desc">
+      We deliver pure farm-fresh groceries in 15 minutes. Help us know how your delivery was, what you loved, or how we can improve.
+    </p>
+
+    <!-- Metrics Bar -->
+    <div class="feedback-metrics-strip">
+      <div class="feedback-metric-card">
+        <div class="feedback-metric-icon"><i class="fa fa-star"></i></div>
+        <div>
+          <div class="feedback-metric-val" id="metricAvgRating">4.9 / 5</div>
+          <div class="feedback-metric-label">Average Customer Score</div>
+        </div>
+      </div>
+      <div class="feedback-metric-card">
+        <div class="feedback-metric-icon"><i class="fa fa-smile"></i></div>
+        <div>
+          <div class="feedback-metric-val" id="metricRecommended">98%</div>
+          <div class="feedback-metric-label">Happy Recommendation Rate</div>
+        </div>
+      </div>
+      <div class="feedback-metric-card">
+        <div class="feedback-metric-icon"><i class="fa fa-bolt"></i></div>
+        <div>
+          <div class="feedback-metric-val">12.4 Mins</div>
+          <div class="feedback-metric-label">Avg. Delivery Speed</div>
+        </div>
+      </div>
+      <div class="feedback-metric-card">
+        <div class="feedback-metric-icon"><i class="fa fa-shield-alt"></i></div>
+        <div>
+          <div class="feedback-metric-val">100%</div>
+          <div class="feedback-metric-label">Quality Assured</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MAIN CONTENT SECTION ===== -->
+<main class="feedback-main-section">
+  <div class="container">
+    <div class="feedback-grid">
+      <!-- LEFT: FEEDBACK FORM -->
+      <div class="feedback-form-card">
+        <div class="feedback-card-header">
+          <h2 class="feedback-card-title"><i class="fa fa-pen-fancy"></i> Share Your Grocery Feedback</h2>
+          <p class="feedback-card-sub">Takes only 60 seconds — get an instant 10% coupon code upon completion!</p>
+          <div id="orderPrefillWrap" style="display:none;">
+            <span class="order-prefill-badge" id="orderPrefillBadge">
+              <i class="fa fa-receipt"></i> Rating for Order <strong id="orderPrefillText">#FC-0000</strong>
+            </span>
+          </div>
+        </div>
+
+        <form id="customerFeedbackForm" novalidate>
+          <!-- 1. Star Rating Picker -->
+          <div class="rating-picker-box">
+            <div class="rating-picker-label">Rate Your Overall Experience</div>
+            <div class="feedback-stars-row" id="starsRow" role="radiogroup" aria-label="Rating Stars">
+              <button type="button" class="star-btn active" data-rating="1" aria-label="1 star"><i class="fa fa-star"></i></button>
+              <button type="button" class="star-btn active" data-rating="2" aria-label="2 stars"><i class="fa fa-star"></i></button>
+              <button type="button" class="star-btn active" data-rating="3" aria-label="3 stars"><i class="fa fa-star"></i></button>
+              <button type="button" class="star-btn active" data-rating="4" aria-label="4 stars"><i class="fa fa-star"></i></button>
+              <button type="button" class="star-btn active" data-rating="5" aria-label="5 stars"><i class="fa fa-star"></i></button>
+            </div>
+            <div class="feedback-reaction-text" id="starReactionText">🤩 Loved it! Super Fresh &amp; Fast!</div>
+            <input type="hidden" id="feedbackRatingInput" name="rating" value="5"/>
+          </div>
+
+          <!-- 2. Category Selector -->
+          <div class="form-section-title">
+            <span>What is your feedback mainly about?</span>
+            <small style="color:var(--gray-400);font-weight:normal;">Select one</small>
+          </div>
+          <div class="category-chips-grid" id="categoryChips">
+            <button type="button" class="category-chip-btn active" data-cat="15-Min Delivery Speed">
+              <span class="chip-icon">⚡</span>
+              <span>Delivery Speed</span>
+            </button>
+            <button type="button" class="category-chip-btn" data-cat="Freshness &amp; Quality">
+              <span class="chip-icon">🥦</span>
+              <span>Produce Quality</span>
+            </button>
+            <button type="button" class="category-chip-btn" data-cat="Packaging &amp; Care">
+              <span class="chip-icon">📦</span>
+              <span>Safe Packaging</span>
+            </button>
+            <button type="button" class="category-chip-btn" data-cat="Delivery Partner">
+              <span class="chip-icon">🚴</span>
+              <span>Delivery Partner</span>
+            </button>
+            <button type="button" class="category-chip-btn" data-cat="Prices &amp; Offers">
+              <span class="chip-icon">💰</span>
+              <span>Prices &amp; Offers</span>
+            </button>
+            <button type="button" class="category-chip-btn" data-cat="App &amp; Website Experience">
+              <span class="chip-icon">📱</span>
+              <span>App Experience</span>
+            </button>
+          </div>
+          <input type="hidden" id="feedbackCategoryInput" name="category" value="15-Min Delivery Speed"/>
+
+          <!-- 3. Quick Compliments / Tag Pills -->
+          <div class="form-section-title">
+            <span>Quick Highlights</span>
+            <small style="color:var(--gray-400);font-weight:normal;">Click to select multiple</small>
+          </div>
+          <div class="tags-wrap" id="complimentsWrap">
+            <span class="compliment-pill active" data-tag="⚡ Lightning Fast">⚡ Lightning Fast</span>
+            <span class="compliment-pill active" data-tag="🥦 Super Fresh">🥦 Super Fresh</span>
+            <span class="compliment-pill" data-tag="📦 Spill-Free Box">📦 Spill-Free Box</span>
+            <span class="compliment-pill" data-tag="😊 Friendly Delivery">😊 Friendly Delivery</span>
+            <span class="compliment-pill" data-tag="💰 Great Discount">💰 Great Discount</span>
+            <span class="compliment-pill" data-tag="🧊 Chilled Dairy">🧊 Chilled Dairy</span>
+            <span class="compliment-pill" data-tag="🍎 Crisp Fruits">🍎 Crisp Fruits</span>
+          </div>
+
+          <!-- 4. NPS 1-10 Scale -->
+          <div class="nps-box">
+            <div class="nps-box-header">
+              <span>How likely are you to recommend FreshCart to friends?</span>
+              <strong id="npsDisplayVal" style="color:var(--primary-dark);">10 / 10</strong>
+            </div>
+            <div class="nps-scale-buttons" id="npsButtons">
+              <button type="button" class="nps-btn" data-nps="1">1</button>
+              <button type="button" class="nps-btn" data-nps="2">2</button>
+              <button type="button" class="nps-btn" data-nps="3">3</button>
+              <button type="button" class="nps-btn" data-nps="4">4</button>
+              <button type="button" class="nps-btn" data-nps="5">5</button>
+              <button type="button" class="nps-btn" data-nps="6">6</button>
+              <button type="button" class="nps-btn" data-nps="7">7</button>
+              <button type="button" class="nps-btn" data-nps="8">8</button>
+              <button type="button" class="nps-btn" data-nps="9">9</button>
+              <button type="button" class="nps-btn active" data-nps="10">10</button>
+            </div>
+            <div class="nps-labels-row">
+              <span>1 - Unlikely</span>
+              <span>5 - Neutral</span>
+              <span>10 - Extremely Likely!</span>
+            </div>
+            <input type="hidden" id="feedbackNpsInput" name="nps" value="10"/>
+          </div>
+
+          <!-- 5. Customer Details -->
+          <div class="feedback-inputs-row">
+            <div class="form-group">
+              <label for="fbName">Your Name <span style="color:var(--danger)">*</span></label>
+              <div class="input-icon">
+                <i class="fa fa-user"></i>
+                <input type="text" id="fbName" placeholder="e.g. Arun Kumar" required/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="fbEmail">Email Address <span style="color:var(--danger)">*</span></label>
+              <div class="input-icon">
+                <i class="fa fa-envelope"></i>
+                <input type="email" id="fbEmail" placeholder="e.g. arun@example.com" required/>
+              </div>
+            </div>
+          </div>
+
+          <div class="feedback-inputs-row">
+            <div class="form-group">
+              <label for="fbPhone">Phone Number <small>(Optional)</small></label>
+              <div class="input-icon">
+                <i class="fa fa-phone"></i>
+                <input type="tel" id="fbPhone" placeholder="e.g. 9840012345"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="fbOrderId">Order ID <small>(Optional)</small></label>
+              <div class="input-icon">
+                <i class="fa fa-receipt"></i>
+                <input type="text" id="fbOrderId" placeholder="e.g. FC-84920"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Review Textarea -->
+          <div class="textarea-group">
+            <div class="form-section-title">
+              <label for="fbMessage">Your Review &amp; Comments <span style="color:var(--danger)">*</span></label>
+              <span class="char-counter" id="charCounter">0 / 600</span>
+            </div>
+            <textarea id="fbMessage" class="feedback-textarea" maxlength="600" placeholder="Tell us what you enjoyed most about your order, produce quality, delivery time, or any suggestions you have..." required></textarea>
+          </div>
+
+          <!-- 7. Submit Button -->
+          <button type="submit" class="btn-submit-feedback" id="submitFeedbackBtn">
+            <i class="fa fa-paper-plane"></i> Submit Feedback &amp; Claim 10% Off
+          </button>
+          <div class="feedback-privacy-note">
+            <i class="fa fa-lock"></i> 100% Secure &amp; Verified. We respect your privacy.
+          </div>
+        </form>
+      </div>
+
+      <!-- RIGHT: STATS SUMMARY & LIVE CUSTOMER WALL -->
+      <aside class="feedback-sidebar">
+        <!-- Rating Breakdown Card -->
+        <div class="rating-summary-card">
+          <div class="rating-summary-top">
+            <div class="rating-big-score" id="summaryScore">4.9</div>
+            <div>
+              <div class="rating-stars-gold">
+                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-alt"></i>
+              </div>
+              <div class="rating-total-label">Based on <strong id="summaryCount">1,420+</strong> verified reviews</div>
+            </div>
+          </div>
+
+          <div class="rating-bars-list">
+            <div class="rating-bar-row">
+              <div class="rating-bar-star">5 <i class="fa fa-star"></i></div>
+              <div class="rating-bar-track"><div class="rating-bar-fill" id="bar5" style="width: 82%;"></div></div>
+              <div class="rating-bar-pct" id="pct5">82%</div>
+            </div>
+            <div class="rating-bar-row">
+              <div class="rating-bar-star">4 <i class="fa fa-star"></i></div>
+              <div class="rating-bar-track"><div class="rating-bar-fill" id="bar4" style="width: 14%;"></div></div>
+              <div class="rating-bar-pct" id="pct4">14%</div>
+            </div>
+            <div class="rating-bar-row">
+              <div class="rating-bar-star">3 <i class="fa fa-star"></i></div>
+              <div class="rating-bar-track"><div class="rating-bar-fill" id="bar3" style="width: 3%;"></div></div>
+              <div class="rating-bar-pct" id="pct3">3%</div>
+            </div>
+            <div class="rating-bar-row">
+              <div class="rating-bar-star">2 <i class="fa fa-star"></i></div>
+              <div class="rating-bar-track"><div class="rating-bar-fill" id="bar2" style="width: 1%;"></div></div>
+              <div class="rating-bar-pct" id="pct2">1%</div>
+            </div>
+            <div class="rating-bar-row">
+              <div class="rating-bar-star">1 <i class="fa fa-star"></i></div>
+              <div class="rating-bar-track"><div class="rating-bar-fill" id="bar1" style="width: 0%;"></div></div>
+              <div class="rating-bar-pct" id="pct1">0%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Customer Reviews Wall -->
+        <div>
+          <div class="reviews-wall-header">
+            <h3 class="reviews-wall-title"><i class="fa fa-comments"></i> Verified Customer Wall</h3>
+            <select id="reviewFilterSelect" class="reviews-filter-select">
+              <option value="all">All Reviews</option>
+              <option value="5">5-Star Only</option>
+              <option value="15-Min Delivery Speed">Delivery Speed</option>
+              <option value="Freshness &amp; Quality">Fresh Produce</option>
+            </select>
+          </div>
+
+          <div class="feedback-reviews-list" id="feedbackReviewsList">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<!-- ===== SUCCESS CELEBRATION MODAL ===== -->
+<div class="modal-overlay" id="feedbackSuccessOverlay" hidden></div>
+<div class="modal modal-medium" id="feedbackSuccessModal" role="dialog" aria-modal="true" hidden>
+  <div class="celebration-box">
+    <div class="celebration-icon"><i class="fa fa-check"></i></div>
+    <h2 class="celebration-title">Thank You, <span id="rewardUserName">Customer</span>! 🎉</h2>
+    <p class="celebration-desc">
+      Your feedback has been successfully recorded. You help us keep deliveries fast and groceries farm-fresh.
+    </p>
+
+    <!-- Reward Coupon Box -->
+    <div class="coupon-reward-box">
+      <div class="coupon-reward-label"><i class="fa fa-gift"></i> Here is a 10% Discount on Your Next Order</div>
+      <div class="coupon-code-wrap">
+        <span class="coupon-code-text" id="rewardCouponText">FRESHLOVE10</span>
+        <button class="btn-copy-code" id="copyCouponBtn"><i class="fa fa-copy"></i> Copy</button>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;justify-content:center;">
+      <a href="products.html" class="btn-primary" style="padding:12px 24px;">
+        <i class="fa fa-store"></i> Shop Groceries Now
+      </a>
+      <button class="btn-outline" id="closeFeedbackModalBtn" style="padding:12px 20px;">
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MOBILE BOTTOM APP BAR ===== -->
+<nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+  <a href="index.html" class="bottom-nav-item">
+    <i class="fa fa-home"></i>
+    <span>Home</span>
+  </a>
+  <a href="categories.html" class="bottom-nav-item">
+    <i class="fa fa-th-large"></i>
+    <span>Categories</span>
+  </a>
+  <a href="products.html" class="bottom-nav-item">
+    <i class="fa fa-store"></i>
+    <span>Shop</span>
+  </a>
+  <a href="orders.html" class="bottom-nav-item">
+    <i class="fa fa-box"></i>
+    <span>Orders</span>
+  </a>
+  <a href="feedback.html" class="bottom-nav-item active">
+    <i class="fa fa-star"></i>
+    <span>Feedback</span>
+  </a>
+</nav>
+
+<!-- ===== CART SIDEBAR ===== -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-sidebar" id="cartSidebar" role="dialog" aria-modal="true" aria-label="Shopping cart" hidden>
+  <div class="cart-header">
+    <h2><i class="fa fa-shopping-cart"></i> My Cart <span id="cartCount" class="cart-count-badge">0</span></h2>
+    <button class="close-btn" id="closeCart" aria-label="Close cart"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-footer" id="cartFooter" hidden>
+    <div class="cart-summary">
+      <div class="summary-row"><span>Subtotal</span><span id="cartSubtotal">Rs.0</span></div>
+      <div class="summary-row"><span>Delivery Fee</span><span id="deliveryFee">Rs.40</span></div>
+      <div class="summary-row total-row"><span><strong>Total</strong></span><span id="cartTotal"><strong>Rs.0</strong></span></div>
+    </div>
+    <button class="btn-primary btn-full" id="checkoutBtn"><i class="fa fa-lock"></i> Proceed to Checkout</button>
+  </div>
+  <div class="cart-empty" id="cartEmpty">
+    <div class="empty-emoji">🛒</div>
+    <h3>Your cart is empty</h3>
+    <p>Add some fresh groceries to get started!</p>
+    <button class="btn-primary" id="startShoppingBtn">Browse Products</button>
+  </div>
+</aside>
+
+<!-- ===== LOGIN / REGISTER MODAL ===== -->
+<div class="modal-overlay" id="loginOverlay" hidden></div>
+<div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-label="Login" hidden>
+  <div class="modal-header">
+    <h2 id="authModalTitle"><i class="fa fa-user-circle"></i> Welcome Back</h2>
+    <button class="close-btn" id="closeLogin" aria-label="Close"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="modal-body">
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="loginTab">Login</button>
+      <button class="auth-tab" id="registerTab">Register</button>
+    </div>
+    <form id="loginForm" class="auth-form" novalidate>
+      <div class="form-group">
+        <label for="loginEmail">Email Address</label>
+        <div class="input-icon"><i class="fa fa-envelope"></i>
+          <input type="email" id="loginEmail" placeholder="you@example.com" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <div class="input-icon"><i class="fa fa-lock"></i>
+          <input type="password" id="loginPassword" placeholder="Your password" required/>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary btn-full"><i class="fa fa-sign-in-alt"></i> Login</button>
+    </form>
+    <form id="registerForm" class="auth-form" style="display:none;" novalidate>
+      <div class="form-group">
+        <label for="regName">Full Name</label>
+        <div class="input-icon"><i class="fa fa-user"></i>
+          <input type="text" id="regName" placeholder="Your full name" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="regEmail">Email Address</label>
+        <div class="input-icon"><i class="fa fa-envelope"></i>
+          <input type="email" id="regEmail" placeholder="you@example.com" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="regPassword">Password</label>
+        <div class="input-icon"><i class="fa fa-lock"></i>
+          <input type="password" id="regPassword" placeholder="Create a strong password" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="regPhone">Phone Number</label>
+        <div class="input-icon"><i class="fa fa-phone"></i>
+          <input type="tel" id="regPhone" placeholder="10-digit mobile number"/>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary btn-full"><i class="fa fa-user-plus"></i> Create Account</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===== LOCATION SELECTOR MODAL ===== -->
+<div class="modal-overlay" id="locationOverlay" hidden></div>
+<div class="modal modal-medium" id="locationModal" role="dialog" aria-modal="true" aria-label="Select Delivery Location" hidden>
+  <div class="modal-header">
+    <h2><i class="fa fa-map-marker-alt"></i> Select Delivery Location</h2>
+    <button class="close-btn" id="closeLocationModal" aria-label="Close"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="location-modal-body">
+    <p class="loc-modal-desc">Select your city or enter a pincode to check instant 15-minute delivery availability.</p>
+    <div class="loc-search-box">
+      <i class="fa fa-search"></i>
+      <input type="text" id="locPincodeInput" placeholder="Enter Tamil Nadu City or 6-digit Pincode..." maxlength="30"/>
+      <button class="btn-primary" id="applyPincodeBtn" style="padding:8px 16px;">Set</button>
+    </div>
+    <button class="btn-gps" id="detectLocationBtn"><i class="fa fa-crosshairs"></i> Use Current Location (Auto-Detect)</button>
+    <div class="loc-popular-title">Popular Tamil Nadu Delivery Hubs</div>
+    <div class="loc-cities-grid">
+      <button class="city-chip active" data-city="Chennai" data-pin="600001">🏖️ Chennai 600001</button>
+      <button class="city-chip" data-city="Coimbatore" data-pin="641001">🏭 Coimbatore 641001</button>
+      <button class="city-chip" data-city="Madurai" data-pin="625001">🛕 Madurai 625001</button>
+      <button class="city-chip" data-city="Tiruchirappalli" data-pin="620001">🏰 Trichy 620001</button>
+      <button class="city-chip" data-city="Salem" data-pin="636001">🌾 Salem 636001</button>
+      <button class="city-chip" data-city="Tirunelveli" data-pin="627001">🌊 Tirunelveli 627001</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>
